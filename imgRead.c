@@ -13,7 +13,7 @@ int ProcessImage(char* filename) {
     FILE *fp;
     struct Image img;
 
-    fp = fopen(filename, "r");
+    fp = fopen("input2.img", "r");
     if (fp == NULL) {
         printf("\nCan't open file or file doesn't exist.\r\n");
         exit(0);
@@ -26,17 +26,15 @@ int ProcessImage(char* filename) {
         unsigned int size1 = img.width + img.height;
         if (size1 > 0xFFFF) {
             printf("Error! Large value of size1 detected!\n");
-            return 0;
         }
 
         char* buff1 = (char*)malloc(size1);
         if (buff1 == NULL) {
             printf("Error! Buffer allocation failed!\n");
-            return 0;
         }
         if (sizeof(img.data) > size1) {
             printf("Error! Not enough memory to copy data\n");
-            return 0;
+    
         }
 
         memcpy(buff1, img.data, sizeof(img.data));
@@ -49,7 +47,6 @@ int ProcessImage(char* filename) {
             if (size1 / 3 == 0) {
                 if (buff1 == NULL) {
                     printf("Error! Buffer is already freed!\n");
-                    return 0;
                 } else {
                     buff1[0] = 'a';
                 }
@@ -60,18 +57,15 @@ int ProcessImage(char* filename) {
         char* buff2 = (char*)malloc(size2);
         if (buff2 == NULL) {
             printf("Error! Memory allocation failed!\n");
-            return 0;
         }
         if (sizeof(img.data) > size2) {
             printf("Error! Not enough memory to copy data!\n");
-            return 0;
         }
 
         memcpy(buff2, img.data, sizeof(img.data));
 
         if (img.height == 0) {
             printf("Error! Image Height is zero!\n");
-            return 0;
         }
 
         int size3 = img.width / img.height;
@@ -79,17 +73,14 @@ int ProcessImage(char* filename) {
         char* buff4 = (char*)malloc(size3);
         if (buff4 == NULL) {
             printf("Error! Memory allocation failed.\n");
-            return 0;
         }
         if (sizeof(img.data) > size3) {
             printf("Error! Not enough memory to copy data!\n");
-            return 0;
         }
         memcpy(buff4, img.data, sizeof(img.data));
 
         if (size3 > 9) {
             printf("Error! Memory access beyond allowed size detected!\n");
-            return 0;
         } else {
             char OOBR = buff3[size3];
             buff3[size3] = 'c';
