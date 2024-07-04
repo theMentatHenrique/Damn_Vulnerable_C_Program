@@ -24,7 +24,7 @@ int ProcessImage(char* filename){
 	char ch;
 	struct Image img;
 
-	fp = fopen(filename,"r");            //Statement   1
+	fp = fopen("input.img","r");            //Statement   1
 
 	if(fp == NULL)
 	{
